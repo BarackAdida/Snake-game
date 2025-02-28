@@ -70,6 +70,7 @@ if(
 (currentSnake[0] - width <= 0 && direction === -width) ||
 squares[currentSnake[0] + direction].classList.contains("snake")   
 ){ 
+squares[currentSnake[0]].style.backgroundColor = "red";
 return true  
 }else{  
 return false 
