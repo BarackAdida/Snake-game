@@ -1,22 +1,28 @@
+// Select DOM elements
 let grid = document.querySelector(".grid");
 let popup = document.querySelector(".popup");
 let playAgain = document.querySelector(".playAgain");
 let startGameButton = document.querySelector(".startGame");
 let scoreDisplay = document.querySelector(".scoreDisplay");
+let highScoreDisplay = document.querySelector(".highScore");
+let lastScoresDisplay = document.querySelector(".lastScores");
 let startScreen = document.querySelector(".start-screen");
 
 let width = 10;
-let currentIndex = 0;
-let appleIndex = 0;
 let currentSnake = [2, 1, 0];
 let direction = 1;
 let score = 0;
 let speed = 0.9;
 let intervalTime = 1000;
-let interval = 0;
+let interval;
 let gameStarted = false;
+let highScore = localStorage.getItem("highScore") || 0;
+let lastFiveScores = JSON.parse(localStorage.getItem("lastFiveScores")) || [];
 
 document.addEventListener("DOMContentLoaded", function () {
+    highScoreDisplay.textContent = `High Score: ${highScore}`;
+    lastScoresDisplay.textContent = `Last Scores: ${lastFiveScores.join(", ")}`;
+
     createBoard();
     playAgain.addEventListener("click", replay);
     startGameButton.addEventListener("click", startGame);
@@ -25,41 +31,54 @@ document.addEventListener("DOMContentLoaded", function () {
 // Create Game Board
 function createBoard() {
     popup.style.display = "none";
-    startScreen.style.display = "flex"; // Show start screen
-    grid.innerHTML = ""; 
-    for (let i = 0; i < 100; i++) {
+    startScreen.style.display = "flex";
+    grid.innerHTML = "";
+    
+    for (let i = 0; i < width * width; i++) {
         let div = document.createElement("div");
         grid.appendChild(div);
     }
 }
 
-// Start Game when button is clicked
+// Start Game
 function startGame() {
-    if (gameStarted) return; // Prevent multiple clicks
+    if (gameStarted) return;
+
     gameStarted = true;
-    startScreen.style.display = "none"; // Hide start screen
+    startScreen.style.display = "none";
 
     let squares = document.querySelectorAll(".grid div");
-    randomApple(squares);
-    direction = 1;
-    score = 0;
-    scoreDisplay.innerHTML = `Score: ${score}`;
-    intervalTime = 1000;
-    currentSnake = [2, 1, 0];
-    currentSnake.forEach(index => squares[index].classList.add("snake"));
+    resetGame(squares);
     interval = setInterval(moveOutcome, intervalTime);
     document.addEventListener("keydown", control);
+}
+
+// Reset Game Settings
+function resetGame(squares) {
+    clearInterval(interval);
+    score = 0;
+    scoreDisplay.textContent = `Score: ${score}`;
+    intervalTime = 1000;
+    direction = 1;
+    currentSnake = [2, 1, 0];
+
+    squares.forEach(square => square.classList.remove("snake", "apple"));
+    currentSnake.forEach(index => squares[index].classList.add("snake"));
+
+    randomApple(squares);
 }
 
 // Move Outcome
 function moveOutcome() {
     let squares = document.querySelectorAll(".grid div");
+    
     if (checkForHits(squares)) {
-        gameOver(squares);
+        updateScores();
+        gameOver();
         return clearInterval(interval);
-    } else {
-        moveSnake(squares);
     }
+
+    moveSnake(squares);
 }
 
 // Move Snake
@@ -67,23 +86,20 @@ function moveSnake(squares) {
     let tail = currentSnake.pop();
     squares[tail].classList.remove("snake");
     currentSnake.unshift(currentSnake[0] + direction);
+    
     eatApple(squares, tail);
     squares[currentSnake[0]].classList.add("snake");
 }
 
 // Check for Collisions
 function checkForHits(squares) {
-    if (
-        (currentSnake[0] + width >= width * width && direction === width) ||
-        (currentSnake[0] % width === width - 1 && direction === 1) ||
-        (currentSnake[0] % width === 0 && direction === -1) ||
-        (currentSnake[0] - width < 0 && direction === -width) ||
-        squares[currentSnake[0] + direction].classList.contains("snake")
-    ) {
-        squares[currentSnake[0]].style.backgroundColor = "red";
-        return true;
-    }
-    return false;
+    return (
+        currentSnake[0] + width >= width * width && direction === width ||  // Hits bottom
+        currentSnake[0] % width === width - 1 && direction === 1 ||  // Hits right
+        currentSnake[0] % width === 0 && direction === -1 ||  // Hits left
+        currentSnake[0] - width < 0 && direction === -width ||  // Hits top
+        squares[currentSnake[0] + direction]?.classList.contains("snake") // Hits itself
+    );
 }
 
 // Eat Apple
@@ -92,9 +108,11 @@ function eatApple(squares, tail) {
         squares[currentSnake[0]].classList.remove("apple");
         squares[tail].classList.add("snake");
         currentSnake.push(tail);
+
         randomApple(squares);
         score++;
         scoreDisplay.textContent = `Score: ${score}`;
+        
         clearInterval(interval);
         intervalTime *= speed;
         interval = setInterval(moveOutcome, intervalTime);
@@ -103,37 +121,53 @@ function eatApple(squares, tail) {
 
 // Generate Random Apple
 function randomApple(squares) {
+    let appleIndex;
     do {
         appleIndex = Math.floor(Math.random() * squares.length);
     } while (squares[appleIndex].classList.contains("snake"));
+    
     squares[appleIndex].classList.add("apple");
 }
 
 // Handle Key Controls
 function control(e) {
-    let key = e.key;
-    if (key === "ArrowUp" && direction !== width) {
+    if (e.key === "ArrowUp" && direction !== width) {
         direction = -width;
-    } else if (key === "ArrowDown" && direction !== -width) {
+    } else if (e.key === "ArrowDown" && direction !== -width) {
         direction = width;
-    } else if (key === "ArrowLeft" && direction !== 1) {
+    } else if (e.key === "ArrowLeft" && direction !== 1) {
         direction = -1;
-    } else if (key === "ArrowRight" && direction !== -1) {
+    } else if (e.key === "ArrowRight" && direction !== -1) {
         direction = 1;
     }
 }
 
+// Update Last Five Scores & High Score
+function updateScores() {
+    lastFiveScores.push(score);
+    if (lastFiveScores.length > 5) lastFiveScores.shift(); // Keep last 5 scores
+
+    if (score > highScore) {
+        highScore = score;
+        localStorage.setItem("highScore", highScore);
+    }
+
+    localStorage.setItem("lastFiveScores", JSON.stringify(lastFiveScores));
+
+    lastScoresDisplay.textContent = `Last Scores: ${lastFiveScores.join(", ")}`;
+    highScoreDisplay.textContent = `High Score: ${highScore}`;
+}
+
 // Game Over
-function gameOver(squares) {
+function gameOver() {
     popup.style.display = "flex";
-    gameStarted = false; // Allow restarting the game
+    gameStarted = false;
 }
 
 // Replay Game
 function replay() {
-    grid.innerHTML = "";
     createBoard();
-    startScreen.style.display = "flex"; // Show start screen again
+    startScreen.style.display = "flex";
     popup.style.display = "none";
     gameStarted = false;
 }

@@ -21,8 +21,6 @@ body {
 .grid div {
   width: 20px;
   height: 20px;
-  /*border:1px black solid;
-box-sizing:border-box*/
 }
 
 .snake {
@@ -69,20 +67,6 @@ box-sizing:border-box*/
   text-align: center;
 }
 
-.scoreDisplay {
-  font-size: 24px;
-  border: 2px solid black;
-  color: #fff;
-  background: #333;
-  padding: 10px 20px;
-  border-radius: 8px;
-  display: inline-block;
-  text-align: center;
-  width: 50px;
-  margin: 0 auto;
-  margin-bottom: 15px;
-}
-
 .game-container {
   display: flex;
   flex-wrap: wrap;
@@ -117,4 +101,42 @@ box-sizing:border-box*/
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.3s ease-in-out;
+}
+
+.score-container {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  padding: 10px;
+  border: 2px solid green;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.otherScores {
+  width: 200px;
+  font-size: 15px;
+  height: px;
+  border-color: 1px solid black;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.scoreDisplay {
+  background-color: #5fbd26;
+  width: 200px;
+  height: 50px;
+}
+
+.highScore {
+  background-color: #007BFF;
+  padding: auto;
+}
+
+.lastScores {
+  background-color: yellowgreen;
+  padding: auto;
 }
