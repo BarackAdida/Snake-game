@@ -7,10 +7,14 @@ let scoreDisplay = document.querySelector(".scoreDisplay");
 let highScoreDisplay = document.querySelector(".highScore");
 let lastScoresDisplay = document.querySelector(".lastScores");
 let startScreen = document.querySelector(".start-screen");
+let lossDisplay = document.querySelector(".loss")
+let winDisplay = document.querySelector(".wins")
 
 let width = 10;
 let currentSnake = [2, 1, 0];
 let direction = 1;
+let loss = localStorage.getItem("loss") || 0;
+let wins = localStorage.getItem("wins") || 0;
 let score = 0;
 let speed = 0.9;
 let intervalTime = 1000;
@@ -22,6 +26,8 @@ let lastFiveScores = JSON.parse(localStorage.getItem("lastFiveScores")) || [];
 document.addEventListener("DOMContentLoaded", function () {
     highScoreDisplay.textContent = `High Score: ${highScore}`;
     lastScoresDisplay.textContent = `Last Scores: ${lastFiveScores.join(", ")}`;
+    lossDisplay.textContent = `Losses ${loss}`;
+    winDisplay.textContent = `Wins ${wins}`
 
     createBoard();
     playAgain.addEventListener("click", replay);
@@ -33,7 +39,7 @@ function createBoard() {
     popup.style.display = "none";
     startScreen.style.display = "flex";
     grid.innerHTML = "";
-    
+
     for (let i = 0; i < width * width; i++) {
         let div = document.createElement("div");
         grid.appendChild(div);
@@ -71,9 +77,10 @@ function resetGame(squares) {
 // Move Outcome
 function moveOutcome() {
     let squares = document.querySelectorAll(".grid div");
-    
+
     if (checkForHits(squares)) {
         updateScores();
+        lossesAndwins(score)
         gameOver();
         return clearInterval(interval);
     }
@@ -86,7 +93,7 @@ function moveSnake(squares) {
     let tail = currentSnake.pop();
     squares[tail].classList.remove("snake");
     currentSnake.unshift(currentSnake[0] + direction);
-    
+
     eatApple(squares, tail);
     squares[currentSnake[0]].classList.add("snake");
 }
@@ -112,7 +119,7 @@ function eatApple(squares, tail) {
         randomApple(squares);
         score++;
         scoreDisplay.textContent = `Score: ${score}`;
-        
+
         clearInterval(interval);
         intervalTime *= speed;
         interval = setInterval(moveOutcome, intervalTime);
@@ -125,7 +132,7 @@ function randomApple(squares) {
     do {
         appleIndex = Math.floor(Math.random() * squares.length);
     } while (squares[appleIndex].classList.contains("snake"));
-    
+
     squares[appleIndex].classList.add("apple");
 }
 
@@ -154,8 +161,22 @@ function updateScores() {
 
     localStorage.setItem("lastFiveScores", JSON.stringify(lastFiveScores));
 
-    lastScoresDisplay.textContent = `Last Scores: ${lastFiveScores.join(", ")}`;
-    highScoreDisplay.textContent = `High Score: ${highScore}`;
+    lastScoresDisplay.textContent = `Last Scores ${lastFiveScores.join(", ")}`;
+    highScoreDisplay.textContent = `High Score ${highScore}`;
+}
+
+// check for losses and wins
+function lossesAndwins(score) {
+    if (score >= 10) {
+        wins++;
+        localStorage.setItem("wins", wins)
+    } else {
+        loss++
+        localStorage.setItem("loss", loss)
+    }
+
+    lossDisplay.textContent = `Losses ${loss}`;
+    winDisplay.textContent = `Wins ${wins}`
 }
 
 // Game Over

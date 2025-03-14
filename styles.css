@@ -137,6 +137,14 @@ body {
 }
 
 .lastScores {
+  background-color: rgb(4, 230, 211);
+}
+
+.wins {
   background-color: yellowgreen;
   padding: auto;
+}
+
+.loss {
+  background-color: #bd2d26;
 }
