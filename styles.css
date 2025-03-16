@@ -69,11 +69,16 @@ body {
 
 .game-container {
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
+  border: 1px solid green;
+}
+
+.score-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .playAgain:hover, .startGame:hover {
@@ -103,48 +108,37 @@ body {
   transition: background 0.3s ease-in-out;
 }
 
-.score-container {
-  font-size: 18px;
-  font-weight: bold;
-  color: white;
-  padding: 10px;
-  border: 2px solid green;
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
-
-.otherScores {
-  width: 200px;
-  font-size: 15px;
-  height: px;
-  border-color: 1px solid black;
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: center;
-  margin-top: 10px;
-}
-
 .scoreDisplay {
   background-color: #5fbd26;
+  margin: 5px;
   width: 200px;
-  height: 50px;
+  height: 40px;
 }
 
 .highScore {
   background-color: #007BFF;
-  padding: auto;
+  margin: 5px;
+  width: 200px;
+  height: 40px;
 }
 
 .lastScores {
   background-color: rgb(4, 230, 211);
+  margin: 5px;
+  width: 200px;
+  height: 40px;
 }
 
 .wins {
   background-color: yellowgreen;
-  padding: auto;
+  margin: 5px;
+  width: 200px;
+  height: 40px;
 }
 
 .loss {
   background-color: #bd2d26;
+  margin: 5px;
+  width: 200px;
+  height: 40px;
 }
