@@ -5,27 +5,29 @@ let playAgain = document.querySelector(".playAgain");
 let startGameButton = document.querySelector(".startGame");
 let scoreDisplay = document.querySelector(".scoreDisplay");
 let highScoreDisplay = document.querySelector(".highScore");
-let lastScoresDisplay = document.querySelector(".lastScores");
 let startScreen = document.querySelector(".start-screen");
 let lossDisplay = document.querySelector(".loss")
 let winDisplay = document.querySelector(".wins")
+let closeButton = document.querySelector(".close")
+let finalScoreDisplay = document.getElementById("finalScore")
+let highScoreView = document.getElementById("highScore")
+let newHighScoreDisplay = document.querySelector(".newHighScore")
 
 let width = 10;
 let currentSnake = [2, 1, 0];
 let direction = 1;
 let loss = localStorage.getItem("loss") || 0;
 let wins = localStorage.getItem("wins") || 0;
+let finalScore = 0
 let score = 0;
 let speed = 0.9;
 let intervalTime = 1000;
 let interval;
 let gameStarted = false;
 let highScore = localStorage.getItem("highScore") || 0;
-let lastFiveScores = JSON.parse(localStorage.getItem("lastFiveScores")) || [];
 
 document.addEventListener("DOMContentLoaded", function () {
     highScoreDisplay.textContent = `High Score: ${highScore}`;
-    lastScoresDisplay.textContent = `Last Scores: ${lastFiveScores.join(", ")}`;
     lossDisplay.textContent = `Losses ${loss}`;
     winDisplay.textContent = `Wins ${wins}`
 
@@ -82,6 +84,7 @@ function moveOutcome() {
         updateScores();
         lossesAndwins(score)
         gameOver();
+        showGameOver(score, highScore)
         return clearInterval(interval);
     }
 
@@ -149,19 +152,13 @@ function control(e) {
     }
 }
 
-// Update Last Five Scores & High Score
+//High Score
 function updateScores() {
-    lastFiveScores.push(score);
-    if (lastFiveScores.length > 5) lastFiveScores.shift(); // Keep last 5 scores
-
     if (score > highScore) {
         highScore = score;
         localStorage.setItem("highScore", highScore);
     }
 
-    localStorage.setItem("lastFiveScores", JSON.stringify(lastFiveScores));
-
-    lastScoresDisplay.textContent = `Last Scores ${lastFiveScores.join(", ")}`;
     highScoreDisplay.textContent = `High Score ${highScore}`;
 }
 
@@ -178,6 +175,25 @@ function lossesAndwins(score) {
     lossDisplay.textContent = `Losses ${loss}`;
     winDisplay.textContent = `Wins ${wins}`
 }
+
+//popup
+function showGameOver(score, highScore) {
+    finalScore = score;
+    if (score > highScore){
+        newHighScoreDisplay.textContent = `New High Score, ${score}`
+    } else if (score = highScore) {
+        newHighScoreDisplay.textContent = `Impressive! You’ve reached the high score again, ${score}`
+    } else {
+        newHighScoreDisplay.textContent = `Keep playing, you'll be better at it`
+    }
+
+    finalScore.textContent = `Your Score: ${finalScore}`
+    newHighScoreDisplay.textContent = `${newHighScoreDisplay}`
+}
+
+closeButton.addEventListener("click", () => {
+    popup.style.display = "none"
+})
 
 // Game Over
 function gameOver() {
