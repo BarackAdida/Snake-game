@@ -9,9 +9,10 @@ let startScreen = document.querySelector(".start-screen");
 let lossDisplay = document.querySelector(".loss")
 let winDisplay = document.querySelector(".wins")
 let closeButton = document.querySelector(".close")
-let finalScoreDisplay = document.getElementById("finalScore")
+let finalScoreDisplay = document.querySelector(".finalScore")
 let highScoreView = document.getElementById("highScore")
 let newHighScoreDisplay = document.querySelector(".newHighScore")
+let playbutton = document.querySelector(".playGame")
 
 let width = 10;
 let currentSnake = [2, 1, 0];
@@ -178,28 +179,34 @@ function lossesAndwins(score) {
 
 //popup
 function showGameOver(score, highScore) {
-    finalScore = score;
+    finalScoreDisplay.textContent = `Current Score: ${score}`;
     if (score > highScore){
-        newHighScoreDisplay.textContent = `New High Score, ${score}`
-    } else if (score = highScore) {
-        newHighScoreDisplay.textContent = `Impressive! You’ve reached the high score again, ${score}`
+        newHighScoreDisplay.textContent = `New High Score!`
+    } else if (score === highScore) {
+        newHighScoreDisplay.textContent = `Impressive! You’ve reached the high score again`
     } else {
-        newHighScoreDisplay.textContent = `Keep playing, you'll be better at it`
+        newHighScoreDisplay.textContent = `Keep playing, you'll get better`
     }
-
-    finalScore.textContent = `Your Score: ${finalScore}`
-    newHighScoreDisplay.textContent = `${newHighScoreDisplay}`
 }
 
 closeButton.addEventListener("click", () => {
-    popup.style.display = "none"
+    popup.style.display = "none";
+    playbutton.style.display = "block";
 })
+
 
 // Game Over
 function gameOver() {
     popup.style.display = "flex";
     gameStarted = false;
+    startGameButton.addEventListener("click", startGame);
 }
+
+playbutton.addEventListener("click", () => {
+    startGame();
+    popup.style.display = "none";
+    playbutton.style.display = "none";
+})
 
 // Replay Game
 function replay() {

@@ -28,6 +28,17 @@ body {
   border-radius: 5%;
 }
 
+.playGame i {
+  font-weight: bolder;
+  font-size: 25px;
+}
+
+.playGame {
+  width: 30px;
+  height: 15px;
+  all: unset;
+}
+
 .apple {
   background: radial-gradient(circle, yellow 30%, orange 90%);
   box-shadow: 0 0 8px yellow;
@@ -35,7 +46,7 @@ body {
 }
 
 .popup {
-  background: white;
+  background: antiquewhite;
   position: fixed;
   top: 100px;
   left: 100px;
@@ -50,6 +61,12 @@ body {
 .popup h2 {
   color: #bd2d26;
   margin: 5px;
+}
+
+.newHighScore {
+  background-color: cornsilk;
+  border-radius: 1%;
+  padding: 5px;
 }
 
 .popupbuttons {
@@ -169,3 +186,4 @@ body {
   width: 200px;
   height: 40px;
 }
+
