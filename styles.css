@@ -33,10 +33,25 @@ body {
   font-size: 25px;
 }
 
+.pause {
+  all: unset;
+  font-size: 25px;
+}
+
+.reset {
+  all: unset;
+  font-size: 25px;
+}
+
 .playGame {
   width: 30px;
   height: 15px;
   all: unset;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
 }
 
 .apple {
