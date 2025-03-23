@@ -1,65 +1,189 @@
-
 body {
-    background: rgb(212, 211, 211);
-  }      
+  background: linear-gradient(to right, #d3d3d3, #ffffff);
+  font-family: "Arial", sans-serif;
+  text-align: center;
+}
+
 .grid {
-    width: 200px;
-    height: 200px;
-    border: 1px solid red;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .grid div {
-    width: 20px;
-    height: 20px;
-    /*border:1px black solid;
-box-sizing:border-box*/
-  }
-  .snake {
-    background: green;
-  }
-  .apple {
-    background: yellow;
-    border-radius: 20px;
-  }
-  .popup {
-    background: rgb(32, 31, 31);
-    position: fixed;
-    top: 100px;
-    left: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  width: 200px;
+  height: 200px;
+  border: 1px solid red;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;  
+  background: #f8f9fa;
+  border: 4px solid #222;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  margin-top: 10px;
+}
 
-  .playAgain {
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.grid div {
+  width: 20px;
+  height: 20px;
+}
 
-  .title {
-    font-size: 24px;
-    font-weight: bold;
-    color: rgb(0, 0, 0);
-    text-align: center;
-  }
+.snake {
+  background: green;
+  border-radius: 5%;
+}
 
-  .scoreDisplay {
-    font-size: 24px;
-    border: 2px solid black;
-    text-align: center;
-    width: 50px;
-    margin: 0 auto;
-    margin-bottom: 15px;
-  }
+.playGame i {
+  font-weight: bolder;
+  font-size: 25px;
+}
 
-  .game-container {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+.playGame {
+  width: 30px;
+  height: 15px;
+  all: unset;
+}
+
+.apple {
+  background: radial-gradient(circle, yellow 30%, orange 90%);
+  box-shadow: 0 0 8px yellow;
+  border-radius: 20px;
+}
+
+.popup {
+  background: antiquewhite;
+  position: fixed;
+  top: 100px;
+  left: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 220px;
+}
+
+.popup h2 {
+  color: #bd2d26;
+  margin: 5px;
+}
+
+.newHighScore {
+  background-color: cornsilk;
+  border-radius: 1%;
+  padding: 5px;
+}
+
+.popupbuttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.playAgain {
+  margin: 10px;
+  display: flex;
+  background: #007BFF;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.close {
+  background: red;
+  margin: 10px;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.close:hover {
+  background: darkred;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid green;
+}
+
+.score-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.playAgain:hover, .startGame:hover {
+  background: #0056b3;
+}
+
+.start-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+.startGame {
+  background: #007BFF;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.scoreDisplay {
+  background-color: #5fbd26;
+  margin: 5px;
+  width: 200px;
+  height: 40px;
+}
+
+.highScore {
+  background-color: #007BFF;
+  margin: 5px;
+  width: 200px;
+  height: 40px;
+}
+/* 
+.lastScores {
+  background-color: rgb(4, 230, 211);
+  margin: 5px;
+  width: 200px;
+  height: 40px;
+} */
+
+.wins {
+  background-color: yellowgreen;
+  margin: 5px;
+  width: 200px;
+  height: 40px;
+}
+
+.loss {
+  background-color: #bd2d26;
+  margin: 5px;
+  width: 200px;
+  height: 40px;
+}
+

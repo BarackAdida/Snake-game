@@ -1,21 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snake</title>
     <link rel="icon" href="images/snake.webp">
     <link rel="stylesheet" href="styles.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
+
 <body>
     <h1 class="title">Snake game</h1>
     <div class="game-container">
-    <div class="scoreDisplay"></div>
-    <div class="grid"></div>
+        <div class="score-container">
+            <div class="scoreDisplay">Score</div>
+            <div class="highScore"></div>
+            <div class="wins">Wins</div>
+            <div class="loss">Losses</div>
+        </div>
+        <div class="grid"></div>
+       <div>
+        <button class="playGame"><i class='bx bx-play'></i></button>
+        <button class="pause">Pause</button>
+       </div>
+    </div>
     <div class="popup">
-        <button class="playAgain">Play Again</button>
+        <h2>Game Over!</h2>
+        <p><span class="finalScore">0</span></p>
+        <p class="newHighScore"></p>
+        <div class="popupbuttons">
+            <button class="playAgain">Play Again</button>
+            <button class="close">Close</button>
+        </div>
+    </div>
+    <div class="start-screen">
+        <button class="startGame">Start Game</button>
     </div>
     <script src="app.js"></script>
-    </div>
 </body>
+
 </html>
