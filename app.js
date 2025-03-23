@@ -13,6 +13,9 @@ let finalScoreDisplay = document.querySelector(".finalScore")
 let highScoreView = document.getElementById("highScore")
 let newHighScoreDisplay = document.querySelector(".newHighScore")
 let playbutton = document.querySelector(".playGame")
+let isPaused = false;
+let pause = document.querySelector(".pause")
+let pauseButton = document.querySelector(".pause i")
 
 let width = 10;
 let currentSnake = [2, 1, 0];
@@ -180,7 +183,7 @@ function lossesAndwins(score) {
 //popup
 function showGameOver(score, highScore) {
     finalScoreDisplay.textContent = `Current Score: ${score}`;
-    if (score > highScore){
+    if (score > highScore) {
         newHighScoreDisplay.textContent = `New High Score!`
     } else if (score === highScore) {
         newHighScoreDisplay.textContent = `Impressive! You’ve reached the high score again`
@@ -206,8 +209,28 @@ playbutton.addEventListener("click", () => {
     startGame();
     popup.style.display = "none";
     playbutton.style.display = "none";
-})
+});
 
+document.addEventListener("DOMContentLoaded", function (){
+    if (pause) {
+        pause.addEventListener("click", togglePause);
+    } else {
+        console.error("Pause button not found in the DOM.")
+    }
+});
+
+function togglePause() {
+    if (isPaused) {
+        interval = setInterval(moveOutcome, intervalTime);
+        pauseButton.classList.remove("bx-play");
+        pauseButton.classList.add("bx-pause");
+    } else {
+        clearInterval(interval);
+        pauseButton.classList.remove("bx-play");
+        pauseButton.classList.add("bx-pause");
+    }
+    isPaused = !isPaused
+}
 // Replay Game
 function replay() {
     createBoard();
