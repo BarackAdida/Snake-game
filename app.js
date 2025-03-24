@@ -16,6 +16,7 @@ let playbutton = document.querySelector(".playGame")
 let isPaused = false;
 let pause = document.querySelector(".pause")
 let pauseButton = document.querySelector(".pause i")
+let restartButton = document.querySelector(".reset")
 
 let width = 10;
 let currentSnake = [2, 1, 0];
@@ -231,6 +232,29 @@ function togglePause() {
     }
     isPaused = !isPaused
 }
+
+restartButton.addEventListener("click", restartGame)
+
+function restartGame() {
+    clearInterval(interval);
+    gameStarted = true;
+
+    let squares = document.querySelectorAll(".grid div");
+
+    score = 0;
+    scoreDisplay.textContent = `score: ${score}`
+    intervalTime = 1000;
+    direction = 1;
+    currentSnake = [2, 1, 0];
+
+    squares.forEach(square => square.classList.remove("snake", "apple"));
+    currentSnake.forEach(index => squares[index].classList.add("snake"));
+
+    randomApple(squares)
+
+    interval = setInterval(moveOutcome, intervalTime)
+}
+
 // Replay Game
 function replay() {
     createBoard();
