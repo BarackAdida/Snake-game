@@ -2,6 +2,7 @@ body {
   background: linear-gradient(to right, #d3d3d3, #ffffff);
   font-family: "Arial", sans-serif;
   text-align: center;
+  align-items: center;
 }
 
 .grid {
@@ -12,10 +13,10 @@ body {
   display: flex;
   flex-wrap: wrap;  
   background: #f8f9fa;
-  border: 4px solid #222;
+  border: 2px solid green;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  margin-top: 10px;
+  margin-top: 4px;
+  background-color: rgba(0, 255, 0, 0.5);
 }
 
 .grid div {
@@ -74,7 +75,7 @@ body {
 }
 
 .popup h2 {
-  color: #bd2d26;
+  color: rgba(255, 0, 0, 0.5);
   margin: 5px;
 }
 
@@ -103,7 +104,7 @@ body {
 }
 
 .close {
-  background: red;
+  background: rgba(255, 0, 0, 0.5);
   margin: 10px;
   color: white;
   border: none;
@@ -132,6 +133,11 @@ body {
   align-items: center;
   justify-content: center;
   border: 1px solid green;
+  gap: 10px;
+  width:470px;
+  padding: 5px;
+  margin-left: 30%;
+  outline: 1px solid green;
 }
 
 .score-container {
@@ -168,35 +174,28 @@ body {
 }
 
 .scoreDisplay {
-  background-color: #5fbd26;
+  background-color: rgba(0, 255, 0, 0.5);
   margin: 5px;
   width: 200px;
   height: 40px;
 }
 
 .highScore {
-  background-color: #007BFF;
+  background-color: rgba(0, 0, 255, 0.5);
   margin: 5px;
   width: 200px;
   height: 40px;
 }
-/* 
-.lastScores {
-  background-color: rgb(4, 230, 211);
-  margin: 5px;
-  width: 200px;
-  height: 40px;
-} */
 
 .wins {
-  background-color: yellowgreen;
+  background-color: rgba(0, 255, 0, 0.5);
   margin: 5px;
   width: 200px;
   height: 40px;
 }
 
 .loss {
-  background-color: #bd2d26;
+  background-color: rgba(255, 0, 0, 0.5);
   margin: 5px;
   width: 200px;
   height: 40px;
